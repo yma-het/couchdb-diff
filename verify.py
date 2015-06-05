@@ -8,8 +8,8 @@ import sys
 
 from tabulate import tabulate
 
-source_db_url = "https://skimdb.npmjs.com/registry/"
-dest_db_url = "http://path_to_second_repo/"
+#source_db_url = "https://skimdb.npmjs.com/registry/"
+#dest_db_url = "http://path_to_second_repo/"
 
 '''response = urllib2.urlopen(source_db_url + '_all_docs')
 html = response.read()
@@ -42,8 +42,9 @@ def fetch_packeges(db_url, db_id):
     html = response.read()
     packages = json.loads(html)
     #for line in packages['rows']:
-    print packages['rows'][:1000]
-    for line in packages['rows'][:1000]:
+    #print packages['rows'][:1000]
+    #for line in packages['rows'][:1000]:
+    for line in packages['rows']:
         response = urllib2.urlopen(db_url + line['id'])
         package_meta = response.read()
         package_meta_json = json.loads(package_meta)
@@ -72,8 +73,8 @@ def processPackages():
     while threadsDone < 2:
         #print "Processing quee!"
         pkgNameAndAttachemen = q.get()
-        if pkgNameAndAttachemen[1] == u'accountant':
-            print pkgNameAndAttachemen
+        #if pkgNameAndAttachemen[1] == u'accountant':
+        #    print pkgNameAndAttachemen
         if pkgNameAndAttachemen != "done":
             dbHash = pkgNameAndAttachemen[0]
             pkgName = pkgNameAndAttachemen[1]
@@ -85,24 +86,24 @@ def processPackages():
             if oppositeBase:
                 if element in oppositeBase:
                     existingPkgIndex = oppositeBase.index(element)
-                    if pkgNameAndAttachemen[1] == u'accountant':
-                        print "deleting!"
-                        print "element = " + str(element)
-                        print "dbHash = " + dbHash
-                        print "oppositeBaseHash = " + oppositeBaseHash
-                        print "existingPkgIndex = " + str(existingPkgIndex)
+                    #if pkgNameAndAttachemen[1] == u'accountant':
+                    #    print "deleting!"
+                    #    print "element = " + str(element)
+                    #    print "dbHash = " + dbHash
+                    #    print "oppositeBaseHash = " + oppositeBaseHash
+                    #    print "existingPkgIndex = " + str(existingPkgIndex)
                     #print "dbContentPair[dbHash] = " + str(dbContentPair[dbHash])
                     #print "oppositeBase = " + str(oppositeBase)
                     #print dbContentPair[dbHash][existingPkgIndex]
                     del dbContentPair[oppositeBaseHash][existingPkgIndex]
                     #del oppositeBase[existingPkgIndex]
                 else:
-                    if pkgNameAndAttachemen[1] == u'accountant':
-                        print "in firs else"
+                    #if pkgNameAndAttachemen[1] == u'accountant':
+                    #    print "in firs else"
                     dbContentPair[dbHash].append(element)
             else:
-                if pkgNameAndAttachemen[1] == u'accountant':
-                    print "in second else"
+                #if pkgNameAndAttachemen[1] == u'accountant':
+                #    print "in second else"
                 dbContentPair[dbHash].append(element)
             #print pkgNameAndAttachemen[0]
             #print pkgNameAndAttachemen[1] + " => " + pkgNameAndAttachemen[2]
@@ -117,11 +118,11 @@ def processPackages():
         secondDatabase = dbContentPair[second_hash]
         for record in firstDatabase[:]:
             if record in secondDatabase:
-                if record[1] == u"accountant":
-                    print "record is: " + str(record)
+                #if record[1] == u"accountant":
+                #    print "record is: " + str(record)
                 indexInFirst = FirstDatabase.index(record)
                 indexInSecond = secondDatabase.index(record)
-                print "Deleting indexes: first - " + str(indexInFirst) + "second: " + str(indexInSecond)
+                #print "Deleting indexes: first - " + str(indexInFirst) + "second: " + str(indexInSecond)
                 del firstDatabase[indexInFirst]
                 del secondDatabase[indexInSecond]
 
